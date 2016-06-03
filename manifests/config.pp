@@ -12,5 +12,4 @@ define redis::config (
     changes => "set ${key} '${value}'",
     notify  => Service[$::redis::params::redis_service],
   }
-
 }
