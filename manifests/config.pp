@@ -10,7 +10,7 @@ define redis::config (
     incl    => $::redis::params::redis_config,
     onlyif  => "get ${key} != '${value}'",
     changes => "set ${key} '${value}'",
-    require => Package[$::redis::params::redis_package]
+    require => Package[$::redis::params::redis_package],
     notify  => Service[$::redis::params::redis_service],
   }
 }
