@@ -37,6 +37,9 @@ class redis (
     ]
   }
 
+  $redis_config = hiera('redis',{})
+  create_resources('redis::config',$redis_config)
+
   service { $::redis::params::redis_service:
     ensure  => running,
     enable  => true,
