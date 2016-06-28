@@ -31,10 +31,6 @@ class redis (
 ) inherits ::redis::params {
   package { $::redis::params::redis_package:
     ensure  => $ensure,
-    require => [
-      User['redis'],
-      Group['redis']
-    ]
   }
 
   $redis_config = hiera('redis',{})

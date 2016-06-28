@@ -9,24 +9,10 @@ class redis::params {
   $redis_package_ensure = 'latest'
 
   case $::operatingsystem {
-    'CentOS', 'OracleLinux', 'RedHat': {
+    'CentOS', 'OracleLinux', 'RedHat', 'Scientific': {
       $redis_config  = '/etc/redis.conf'
       $redis_package = 'redis'
       $redis_service = 'redis'
-
-      group { 'redis':
-        ensure => present,
-        gid    => 245,
-      }
-    
-      user { 'redis':
-        ensure     => present,
-        gid        => 245,
-        home       => '/var/lib/redis',
-        shell      => '/bin/false',
-        managehome => true,
-        uid        => 245,
-      }
     }
     'Debian': {
       case $::operatingsystemmajrelease {
@@ -34,20 +20,6 @@ class redis::params {
           $redis_config  = '/etc/redis/redis.conf'
           $redis_package = 'redis-server'
           $redis_service = 'redis-server'
-
-          group { 'redis':
-            ensure => present,
-            gid    => 245,
-          }
-        
-          user { 'redis':
-            ensure     => present,
-            gid        => 245,
-            home       => '/var/lib/redis',
-            shell      => '/bin/false',
-            managehome => true,
-            uid        => 245,
-          }
         }
         default: {
           fail("The ${module_name} module is not supported on an ${::operatingsystem} ${::operatingsystemmajrelease} distribution.")
