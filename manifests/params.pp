@@ -8,26 +8,21 @@
 class redis::params {
   $redis_package_ensure = 'latest'
 
-  case $::operatingsystem {
-    'CentOS', 'OracleLinux', 'RedHat', 'Scientific': {
+  case $::osfamily {
+    'RedHat': {
       $redis_config  = '/etc/redis.conf'
       $redis_package = 'redis'
       $redis_service = 'redis'
     }
     'Debian': {
-      case $::operatingsystemmajrelease {
-        '8': {
-          $redis_config  = '/etc/redis/redis.conf'
-          $redis_package = 'redis-server'
-          $redis_service = 'redis-server'
-        }
-        default: {
-          fail("The ${module_name} module is not supported on an ${::operatingsystem} ${::operatingsystemmajrelease} distribution.")
-        }
-      }
+      $redis_config  = '/etc/redis/redis.conf'
+
+      $redis_package = 'redis-server'
+      $redis_service = 'redis-server'
     }
     default: {
-      fail("The ${module_name} module is not supported on an ${::operatingsystem} based system.")
+      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
     }
   }
+
 }

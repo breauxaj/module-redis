@@ -1,11 +1,8 @@
 # Class: redis
 #
-# This class installs the redis package
+# This class installs Redis
 #
 # Parameters:
-#
-#  ensure: (default latest)
-#    Determine the state of the packages
 #
 # Actions:
 #   - Installs the redis package
@@ -16,15 +13,7 @@
 #
 #  For a standard installation, use:
 #
-#    class { 'redis':
-#      ensure => 'latest'
-#    }
-#
-#  To remove the installation, use:
-#
-#    class { 'redis':
-#      ensure => 'absent'
-#    }
+#    class { 'redis': }
 #
 class redis (
   $ensure = $::redis::params::redis_package_ensure
@@ -33,8 +22,8 @@ class redis (
     ensure  => $ensure,
   }
 
-  $redis_config = hiera('redis',{})
-  create_resources('redis::config',$redis_config)
+  $config = hiera_hash('redis',{})
+  create_resources('redis::config',$config)
 
   service { $::redis::params::redis_service:
     ensure  => running,
