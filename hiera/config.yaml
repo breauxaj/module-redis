@@ -1,0 +1,3 @@
+redis:
+  'bind':
+    value: 'localhost %{::ipaddress}'
